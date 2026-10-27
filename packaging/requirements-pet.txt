@@ -1,0 +1,4 @@
+# 桌宠本体（Windows）。版本和在 Mac 上开发、测试时用的一样。
+PySide6-Essentials==6.12.0
+pyinstaller==6.22.3
+pyinstaller-hooks-contrib==2026.9

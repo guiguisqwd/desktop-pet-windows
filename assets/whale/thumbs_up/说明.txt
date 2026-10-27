@@ -1,0 +1,7 @@
+点赞（thumbs_up）· 来自 thumbs_up_v2（拍立得相框版）
+thumbs_up_enter.gif ← thumbs_up_enter.gif（13 帧，0.71 秒）
+thumbs_up_loop.gif  ← thumbs_up_loop.gif（10 帧，1.00 秒）
+thumbs_up_exit.gif  ← thumbs_up_exit.gif（10 帧，0.58 秒）
+播放：enter 一次 → loop 2 圈 → exit 一次，共约 3.3 秒。
+什么时候放：提醒弹出后 40 秒内就改过来（改得快）。
+画布 600×620：Pet2 画成宽 240pt、水平居中、底边在 groundY − 6，和桌宠的 idle 重合。

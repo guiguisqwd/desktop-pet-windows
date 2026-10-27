@@ -1,0 +1,8 @@
+# 体态测试后端（Windows）。版本和 Mac 版“体态测试.app”打包时用的一样（.posture-build/mac-yolo/.build-venv），
+# 找到的点才和 Mac 一致。要带窗口的 opencv-python，不能用 opencv-python-headless。
+opencv-python==5.0.0.93
+numpy==2.0.2
+pillow==11.3.0
+onnxruntime==1.19.2
+pyinstaller==6.22.3
+pyinstaller-hooks-contrib==2026.9

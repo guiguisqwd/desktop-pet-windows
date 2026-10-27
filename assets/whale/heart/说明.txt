@@ -1,0 +1,7 @@
+送爱心（heart）· 来自 gift_v6
+heart_enter.gif ← gift_enter.gif（27 帧，1.52 秒）
+heart_main.gif  ← gift_main.gif（13 帧，2.00 秒；就是原来的 whale-heart.gif）
+heart_exit.gif  ← gift_exit.gif（26 帧，1.72 秒）
+播放：enter 一次 → main 一次 → exit 一次，共约 5.2 秒。
+什么时候放：今天第 1 次改过来，或第 5、10、15… 次。
+画布 320×300（老规格）：Pet2 按 GIF 里 idle 的位置换算画框，和桌宠的 idle 重合。

@@ -1,0 +1,8 @@
+.venv/
+.venv-backend/
+.build/
+dist/
+difftest/.build/
+__pycache__/
+*.pyc
+.DS_Store

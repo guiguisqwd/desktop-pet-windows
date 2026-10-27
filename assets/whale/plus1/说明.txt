@@ -1,0 +1,7 @@
++1（plus1）· 来自 plus1_v6
+plus1_enter.gif ← plus1_enter.gif（18 帧，1.19 秒）
+plus1_loop.gif  ← plus1_loop.gif（5 帧，0.25 秒，按一下）
+plus1_exit.gif  ← plus1_exit.gif（19 帧，1.20 秒）
+播放：enter 一次 → loop 3 次（按 3 下）→ exit 一次，共约 3.1 秒。
+什么时候放：改过来了，但不是今天第 1 次或第 5、10… 次，也不是提醒后 40 秒内改的。
+画布 320×300（老规格）：Pet2 按 GIF 里 idle 的位置换算画框，和桌宠的 idle 重合。

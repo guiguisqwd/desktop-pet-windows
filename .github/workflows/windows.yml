@@ -1,0 +1,73 @@
+# 在 GitHub 的 Windows 机器上：跑全部测试（核心测试、和 Mac 版的对拍、打包后的自检、后端在 Windows 上的锁和停），
+# 打出 CyberBeibeijia-windows-v<版本>.zip，放在这次运行的 Artifacts 里下载。推了 v 开头的标签时，再建一个草稿 Release。
+name: Windows 版
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 测试、打包、自检
+        env:
+          PYTHONUTF8: "1"
+          PYTHONIOENCODING: "utf-8"
+        run: python packaging/build_windows.py
+
+      - name: 在 Windows 上真的开一次桌宠，截个图看看
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          $env:PET2_DATA_DIR = Join-Path $env:RUNNER_TEMP "pet2-data"
+          $env:PET2_BACKEND_DIR = Join-Path $env:RUNNER_TEMP "pet2-backend"
+          $exe = Get-ChildItem -Path dist -Recurse -Filter "*.exe" | Where-Object { $_.Directory.Parent.Name -eq "dist" } | Select-Object -First 1
+          Write-Host "打开 $($exe.FullName)"
+          $p = Start-Process -FilePath $exe.FullName -PassThru
+          Start-Sleep -Seconds 20
+          Add-Type -AssemblyName System.Windows.Forms, System.Drawing
+          $b = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
+          $bmp = New-Object System.Drawing.Bitmap $b.Width, $b.Height
+          $g = [System.Drawing.Graphics]::FromImage($bmp)
+          $g.CopyFromScreen($b.Location, [System.Drawing.Point]::Empty, $b.Size)
+          $bmp.Save((Join-Path $PWD "dist\screenshot.png"))
+          Write-Host "还在跑：$(-not $p.HasExited)"
+          Get-Content -Path (Join-Path $env:PET2_DATA_DIR "events.jsonl") -ErrorAction SilentlyContinue | Select-Object -Last 20
+          Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshot
+          path: dist/screenshot.png
+          if-no-files-found: ignore
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CyberBeibeijia-windows
+          path: dist/CyberBeibeijia-windows-v*.zip
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: 有版本标签时建一个草稿 Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" dist/CyberBeibeijia-windows-v*.zip \
+            --draft --title "赛博背背佳 Windows 版 ${GITHUB_REF_NAME}" \
+            --notes "GitHub Actions 自动打的包，测试和自检都过了。还没在真的 Windows 电脑上用摄像头试过，先给内测的人。"

@@ -1,0 +1,7 @@
+托腮（chin_rest）· 来自 chin_rest_v1（拍立得相框版）
+chin_rest_enter.gif ← chin_rest_enter.gif（13 帧，0.71 秒）
+chin_rest_loop.gif  ← chin_rest_loop.gif（12 帧，1.00 秒）
+chin_rest_exit.gif  ← chin_rest_exit.gif（10 帧，0.58 秒）
+播放：enter 一次 → loop 2 圈 → exit 一次，共约 3.3 秒。
+什么时候放：久坐提醒后你离开座位、又回到画面里（看到你回来，眼睛都亮了）。
+画布 600×620：Pet2 画成宽 240pt、水平居中、底边在 groundY − 6，和桌宠的 idle 重合。
