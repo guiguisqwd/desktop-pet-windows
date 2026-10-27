@@ -118,7 +118,7 @@ class SleepFilter(QAbstractNativeEventFilter):
 
     def nativeEventFilter(self, event_type, message):
         try:
-            if event_type == b"windows_generic_MSG":
+            if bytes(event_type) == b"windows_generic_MSG":
                 import ctypes
                 from ctypes import wintypes
                 msg = wintypes.MSG.from_address(int(message))
