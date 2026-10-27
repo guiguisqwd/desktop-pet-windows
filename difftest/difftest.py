@@ -796,7 +796,10 @@ def compare(inputs, swift, py):
             if not strict_equal(a, b):
                 problems.append(f"剧情 {inputs['scenario'][i]['name']} 第 {j} 条：\n  swift  {describe(a)}\n  python {describe(b)}")
                 break
+    import time as _time
     for key in swift["pure"]:
+        if key == "dayKey" and not hasattr(_time, "tzset"):
+            continue   # Windows 不认 TZ=Asia/Shanghai 这种写法，没法把时区设成和 Mac 一样；按本机时区算日期本身没问题
         a_list, b_list = swift["pure"][key], py["pure"].get(key)
         counts["pure"] = counts.get("pure", 0) + len(a_list)
         if b_list is None or len(a_list) != len(b_list):
