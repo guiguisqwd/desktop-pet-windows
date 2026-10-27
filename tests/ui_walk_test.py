@@ -19,7 +19,7 @@ FAKE = os.path.join(ROOT, "tests", "fake_backend.py")
 if sys.platform == "win32":
     launcher = os.path.join(TMP, "PostureTest.cmd")
     with open(launcher, "w", encoding="utf-8") as f:
-        f.write(f'@echo off\r\nset PET2_FAKE_VIA_CMD=1\r\n"{sys.executable}" "{FAKE}" %*\r\n')
+        f.write(f'@echo off\r\nset PET2_FAKE_VIA_CMD=1\r\n"{getattr(sys, '_base_executable', sys.executable)}" "{FAKE}" %*\r\n')
 else:
     launcher = os.path.join(TMP, "PostureTest")
     with open(launcher, "w", encoding="utf-8") as f:

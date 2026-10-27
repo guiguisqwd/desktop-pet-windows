@@ -18,10 +18,11 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 FAKE = os.path.join(ROOT, "tests", "fake_backend.py")
 if sys.platform == "win32":
-    # Windows 不能直接执行 .py：做一个 .cmd 包一层
+    # Windows 不能直接执行 .py：做一个 .cmd 包一层。用真正的 python.exe（不是 venv 里那个会再开一个子进程的启动器），
+    # 这样假后台的父进程就是 cmd.exe，桌宠看到的进程号对得上
     launcher = os.path.join(TMP, "PostureTest.cmd")
     with open(launcher, "w", encoding="utf-8") as f:
-        f.write(f'@echo off\r\nset PET2_FAKE_VIA_CMD=1\r\n"{sys.executable}" "{FAKE}" %*\r\n')
+        f.write(f'@echo off\r\nset PET2_FAKE_VIA_CMD=1\r\n"{getattr(sys, '_base_executable', sys.executable)}" "{FAKE}" %*\r\n')
 else:
     launcher = os.path.join(TMP, "PostureTest")
     with open(launcher, "w", encoding="utf-8") as f:
